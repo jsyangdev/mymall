@@ -16,14 +16,16 @@ public class AddMemberController extends HttpServlet {
 	// 2. ¸ðµ¨ È£Ãâ
 	// 3. ºä ·»´õ¸µ
 	private MemberDao memberDao;	// À§Ä¡ Áß¿ä
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doGet()");
-		// this.memberDao
+		request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("AddMemberController.doPost()");
+		
 		// this.memberDao
+		
 	}
 
 }

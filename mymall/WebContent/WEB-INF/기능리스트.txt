@@ -1,0 +1,17 @@
+1. 메인페이지 
+ⓒIndexController.doGet -> ⓥindex.jsp
+
+2. 회원가입 폼
+ⓒAddMember.doGet -> ⓥaddMember.jsp
+
+3. 회원가입 액션
+ⓒAddMember.doPost -> ⓜMemberDao.insertMember() -> ⓒlogin
+
+4. 로그인 폼
+ⓒLogin.doGet-> ⓥlogin.jsp
+
+5. 로그인 액션
+ⓒLogin.doGet-> ⓜMemberDao.login() -> success:ⓒindex / fail:ⓒlogin
+
+6. 회원정보 보기
+7. 회원정보 수정
