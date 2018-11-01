@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.mymall.dao.MemberDao;
+import com.test.mymall.service.MemberService;
+import com.test.mymall.vo.Member;
 
 @WebServlet("/AddMemberController")
 public class AddMemberController extends HttpServlet {
@@ -15,7 +17,7 @@ public class AddMemberController extends HttpServlet {
 	// 1. 라우터
 	// 2. 모델 호출
 	// 3. 뷰 렌더링
-	private MemberDao memberDao;	// 위치 중요
+	private MemberService memberService;	// 위치 중요
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doGet()");
 		request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
@@ -23,9 +25,22 @@ public class AddMemberController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doPost()");
-		
-		// this.memberDao
-		
+		// post방식으로 넘어오는 값들 한글깨짐 없도록 인코딩
+		request.setCharacterEncoding("utf-8");
+		// 화면에서 입력한 데이터 받기
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String levelOfString = (String)request.getParameter("level");
+		int level = Integer.parseInt(levelOfString);
+		// Member(vo) 생성 후, 입력데이터 셋팅
+		Member member = new Member();
+		member.setId(id);
+		member.setPw(pw);
+		member.setLevel(level);
+		// memberService 생성 후, addMember메서드 호출
+		memberService = new MemberService();
+		memberService.addMember(member);
+		response.sendRedirect(request.getContextPath()+"/LoginController");
 	}
 
 }

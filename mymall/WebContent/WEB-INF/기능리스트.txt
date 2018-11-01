@@ -11,7 +11,15 @@
 ⓒLogin.doGet-> ⓥlogin.jsp
 
 5. 로그인 액션
-ⓒLogin.doGet-> ⓜMemberDao.login() -> success:ⓒindex / fail:ⓒlogin
+ⓒLogin.doPost-> ⓜMemberDao.login() -> success:ⓒindex / fail:ⓒlogin
 
 6. 회원정보 보기
 7. 회원정보 수정
+
+::: 11/01 AM
+1. session에 login 정보 수정
+2. 주문
+3. 주문 list(조인)
+
+::: 11/01 PM
+1. service계층 사용 : 트랜잭션처리 회원삭제 -> 주문삭제

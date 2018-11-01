@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 public class DBHelper {
 	/**
@@ -33,9 +32,15 @@ public class DBHelper {
 	 * @param conn
 	 * @throws SQLException
 	 */
-	public static void close(ResultSet rs, Statement stmt, Connection conn) throws SQLException {
-		if(rs != null) rs.close();
-		if(stmt != null) stmt.close();
-		if(conn != null) conn.close();
+	public static void close(ResultSet rs, Statement stmt, Connection conn) {
+		System.out.println("DBHelper.close() 오버로딩 - 1");
+		if(rs != null) {try {rs.close();} catch(Exception e) {e.printStackTrace();}}
+		if(stmt != null) {try {stmt.close();} catch(Exception e) {e.printStackTrace();}}
+		if(conn != null) {try {conn.close();} catch(Exception e) {e.printStackTrace();}}
+	}
+	public static void close(Statement stmt, Connection conn) {
+		System.out.println("DBHelper.close() 오버로딩 - 2");
+		if(stmt != null) {try {stmt.close();} catch(Exception e) {e.printStackTrace();}}
+		if(conn != null) {try {conn.close();} catch(Exception e) {e.printStackTrace();}}
 	} 
 }
