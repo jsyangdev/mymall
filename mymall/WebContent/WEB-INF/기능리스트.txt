@@ -8,12 +8,14 @@
 ⓒAddMember.doPost -> ⓜMemberDao.insertMember() -> ⓒlogin
 
 4. 로그인 폼
-ⓒLogin.doGet-> ⓥlogin.jsp
+ⓒLogin.doGet -> ⓥlogin.jsp
 
 5. 로그인 액션
-ⓒLogin.doPost-> ⓜMemberDao.login() -> success:ⓒindex / fail:ⓒlogin
+ⓒLogin.doPost -> ⓜMemberDao.login() -> success:ⓒindex / fail:ⓒlogin
 
 6. 회원정보 보기
+ⓒSelectMemberController.doGet -> ⓢMemberService.selectMember() -> ⓜMemberDao.selectMember() ->
+
 7. 회원정보 수정
 
 ::: 11/01 AM

@@ -12,13 +12,13 @@
 	<c:if test="${loginMember != null }">
 		${loginMember.getId()} 님 반갑습니다 !<br>
 		<a href="${pageContext.request.contextPath}/ItemController">상품보기</a><br>
-		<a href="${pageContext.request.contextPath}/OrderListController">내 주문정보 보기</a><br>
+		<a href="${pageContext.request.contextPath}/SelectMemberController?memberNo=${loginMember.getNo()}">내 정보 보기</a><br>
 		<a href="#">로그아웃</a>
 	</c:if>
 	<c:if test="${loginMember == null }">
+		<a href="${pageContext.request.contextPath}/ItemController">상품보기</a>
 		<a href="${pageContext.request.contextPath}/AddMemberController">회원가입</a><br>
 		<a href="${pageContext.request.contextPath}/loginController">로그인</a><br>
-		<a href="${pageContext.request.contextPath}/ItemController">상품보기</a>
 	</c:if>
 </body>
 </html>

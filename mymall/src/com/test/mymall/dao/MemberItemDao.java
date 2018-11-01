@@ -2,41 +2,86 @@ package com.test.mymall.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.test.mymall.commons.DBHelper;
+import com.test.mymall.vo.MemberItem;
+
 
 public class MemberItemDao {
+	/**
+	 * íŠ¹ì • member_noê°’ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ë¥¼ ì‚­ì œí•˜ëŠ” ë©”ì„œë“œ
+	 * @param conn
+	 * @param no
+	 */
 	public void deleteMemberItem(Connection conn, int no) {
-		String sql="";
+		System.out.println("MemberItemDao.deleteMemberItem()");
+		String sql="DELETE FROM member_item WHERE member_no=?";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBHelper.close(pstmt, conn);
 		}
 	}
-	
-	// Member INNER JOIN Item
-	public ArrayList<HashMap<String, Object>> getMemberItemList(int memberNo){
-		Connection conn;	// ÅëÀÏÀÌ ¾ÈµÇ¹Ç·Î ¾êµµ Ä¿³Ø¼ÇÀ» ¸Å°³º¯¼ö·Î °¡Á®¿À°Ú´Ù.
+	/**
+	 * í•œ ëª…ì˜ íšŒì›ì´ ì£¼ë¬¸í•œ ì •ë³´ë¥¼ DBì— ì ‘ê·¼í•´ ë°ì´í„° ì¶”ê°€
+	 * @param conn
+	 * @param memberItem
+	 */
+	public void addMemberItem(Connection conn, MemberItem memberItem) {
+		System.out.println("MemberItemDao.addMemberItemList()");
+		String sql = "INSERT INTO member_item(member_no, item_no, order_date) values(?, ?, now())";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberItem.getMember_no());
+			pstmt.setInt(2, memberItem.getItem_no());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(pstmt, conn);
+		}
+	}
+	/**
+	 * í•œ ëª…ì˜ íšŒì›ì´ ì£¼ë¬¸í•œ ì „ì²´ ì£¼ë¬¸ë¦¬ìŠ¤íŠ¸ë¥¼ selectí•˜ëŠ” ë©”ì„œë“œ
+	 * Member INNER JOIN Item
+	 * @param memberNo
+	 * @return
+	 */
+	public ArrayList<HashMap<String, Object>> getMemberItemList(Connection conn, int memberNo){
+		// Connection conn; ---> í†µì¼ì´ ì•ˆë˜ë¯€ë¡œ ì»¤ë„¥ì…˜ì„ ë§¤ê°œë³€ìˆ˜ë¡œ ê°€ì ¸ì˜´
+		System.out.println("MemberItemDao.getMemberItemList()");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = "";
-		
-		/* 
-		 	SELECT mi.no, mi.order_date, mi.item_no, i.name, i.price
-			FROM member_item mi inner join item i
-			on mi.item_no = i.no
-			where mi.member_no = ?
-
+		String sql = "SELECT mi.no, mi.item_no, i.name, i.price, mi.order_date FROM member_item mi INNER JOIN item i ON mi.item_no = i.no WHERE mi.member_no = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				// ¿ø·¡´Â ÀÌ·¸°Ô ¸¸µé¾î¾ßÇÏ´Âµ¥ MemberItemJoinItem ÀÏÈ¸¿ëÀÌ´Ï±î HashMap ¾µ °Í
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("memberItemNo", rs.getInt("mi.no"));
-				map.put("itemPrice", rs.getInt("i.price"));
+				map.put("itemNo", rs.getInt("mi.item_no"));
+				map.put("itemName", rs.getString("i.name"));
+				map.put("itemPrice", rs.getString("i.price"));
+				map.put("orderDate", rs.getString("mi.order_date"));
 				list.add(map);
 			}
-		*/
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, pstmt, conn);
+		}
 		return list;
 	}
 }

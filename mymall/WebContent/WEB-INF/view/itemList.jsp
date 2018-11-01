@@ -14,14 +14,14 @@
 		<tr>
 			<td>no</td><td>name</td><td>price</td><td>주문</td>
 		</tr>
-<c:forEach items="${itemList}" var="list">
-	<tr>
-  		<td><c:out value="${list.getNo()}"></c:out></td>
-  		<td><c:out value="${list.getName()}"></c:out></td>
-  		<td><c:out value="${list.getPrice()}"></c:out></td>
-  		<td><a href="${pageContext.request.contextPath}/OrderController?itemNo=${list.getNo()}&member=${loginMember.getNo()}">주문하기</a></td>
-  	</tr>
-</c:forEach>
+	<c:forEach items="${itemList}" var="list">
+		<tr>
+	  		<td><c:out value="${list.getNo()}"></c:out></td>
+	  		<td><c:out value="${list.getName()}"></c:out></td>
+	  		<td><c:out value="${list.getPrice()}"></c:out></td>
+	  		<td><a href="${pageContext.request.contextPath}/OrderController?itemNo=${list.getNo()}&member=${loginMember.getNo()}">주문하기</a></td>
+	  	</tr>
+	</c:forEach>
 	</table>
 </body>
 </html>

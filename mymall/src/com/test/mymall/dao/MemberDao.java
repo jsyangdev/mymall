@@ -2,6 +2,7 @@ package com.test.mymall.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,19 +12,57 @@ import com.test.mymall.vo.Member;
 
 public class MemberDao {
 	/**
-	 * È¸¿ø Å»Åğ ¸Ş¼­µå
+	 * íšŒì› íƒˆí‡´ ë©”ì„œë“œ
 	 * @param no
 	 */
 	public void deleteMember(Connection conn, int no) {
-		
-		
-		
+		System.out.println("MemberDao.deleteMember()");
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM member WHERE no=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(pstmt, conn);
+		}
+	}
+	/**
+	 * í•œ ëª…ì˜ íšŒì›ì •ë³´ë¥¼ ì¡°íšŒí•˜ëŠ” ë©”ì„œë“œ
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 */
+	public Member selectMember(Connection conn, int memberNo) {	// ë‚´ íšŒì›ì •ë³´ ë³´ê¸°
+		System.out.println("MemberDao.selectMember()");
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="SELECT no, id, level FROM member WHERE no=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				member = new Member();
+				member.setNo(rs.getInt("no"));
+				member.setId(rs.getString("id"));
+				member.setLevel(rs.getInt("level"));	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, pstmt, conn);
+		}
+		return member;
 		
 	}
 	/**
-	 * È­¸é¿¡¼­ ³Ñ¾î¿Â °ªµé°ú DB³» °ªµéÀ» ºñ±³ÇÏ¿© ·Î±×ÀÎ ¿©ºÎ¸¦ °áÁ¤ÇÏ´Â ¸Ş¼­µå
-	 * ·Î±×ÀÎ ½ÇÆĞ½Ã -> null
-	 * ·Î±×ÀÎ ¼º°ø½Ã -> Member
+	 * í™”ë©´ì—ì„œ ë„˜ì–´ì˜¨ ê°’ë“¤ê³¼ DBë‚´ ê°’ë“¤ì„ ë¹„êµí•˜ì—¬ ë¡œê·¸ì¸ ì—¬ë¶€ë¥¼ ê²°ì •í•˜ëŠ” ë©”ì„œë“œ
+	 * ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ -> null
+	 * ë¡œê·¸ì¸ ì„±ê³µì‹œ -> Member
 	 * @param member
 	 * @return
 	 * @throws Exception 
@@ -31,10 +70,10 @@ public class MemberDao {
 	public Member login(Member member){
 		System.out.println("MemberDao.login()");
 		Member memberLogin = null;
-		// Member vo¿¡ ¼ÂÆÃµÈ °ª °¡Áö°í ¿À±â
+		// Member voì— ì…‹íŒ…ëœ ê°’ ê°€ì§€ê³  ì˜¤ê¸°
 		String id = member.getId();
 		String pw = member.getPw();
-		// µå¶óÀÌ¹ö ·Îµù, DB¿¬°á ¸Ş¼­µå È£Ãâ
+		// ë“œë¼ì´ë²„ ë¡œë”©, DBì—°ê²° ë©”ì„œë“œ í˜¸ì¶œ
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -57,17 +96,17 @@ public class MemberDao {
 		return memberLogin;
 		}
 	/**
-	 * ¸â¹ö¸¦ °¡ÀÔ½ÃÅ°´Â ¸Ş¼­µå
+	 * ë©¤ë²„ë¥¼ ê°€ì…ì‹œí‚¤ëŠ” ë©”ì„œë“œ
 	 * @param member
 	 * @throws Exception
 	 */
 	public void insertMember(Member member) {
 		System.out.println("MemberDao.insertMember()");
-		// Member vo¿¡ ¼ÂÆÃµÈ °ª °¡Áö°í ¿À±â
+		// Member voì— ì…‹íŒ…ëœ ê°’ ê°€ì§€ê³  ì˜¤ê¸°
 		String id = member.getId();
 		String pw = member.getPw();
 		int level = member.getLevel();
-		// µå¶óÀÌ¹ö ·Îµù, DB¿¬°á ¸Ş¼­µå È£Ãâ
+		// ë“œë¼ì´ë²„ ë¡œë”©, DBì—°ê²° ë©”ì„œë“œ í˜¸ì¶œ
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;

@@ -33,4 +33,5 @@ public class Member {
 		System.out.println(level+"<--setLevel() Member");
 		this.level = level;
 	}
+	
 }

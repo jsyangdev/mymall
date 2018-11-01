@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public class DBHelper {
 	/**
-	 * µå¶óÀÌ¹ö ·Îµù, DB¿¬°á ¸Ş¼­µå
-	 * @return Connection°´Ã¼ ÅëÇØ »ı¼ºµÈ ·¹ÆÛ·±½º ¸®ÅÏ
+	 * ë“œë¼ì´ë²„ ë¡œë”©, DBì—°ê²° ë©”ì„œë“œ
+	 * @return Connectionê°ì²´ í†µí•´ ìƒì„±ëœ ë ˆí¼ëŸ°ìŠ¤ ë¦¬í„´
 	 * @throws Exception
 	 */
 	public static Connection getConnection() throws Exception{
@@ -18,28 +18,28 @@ public class DBHelper {
         String jdbcDriver = "jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=euckr";
         String dbUser = "root";
         String dbPass = "java0000";
-        // µå¶óÀÌ¹ö ·Îµù                              
+        // ë“œë¼ì´ë²„ ë¡œë”©                            
         Class.forName("com.mysql.jdbc.Driver");
-        // DB¿¬°á
+        // DBì—°ê²°
         connection = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
         System.out.println(connection+"<--conn");
 		return connection;
 	}
 	/**
-	 * DB¿¡ Á¢±ÙÇÏ´Âµ¥ »ç¿ëµÈ °´Ã¼µé Á¾·á ¸Ş¼­µå
+	 * DBì— ì ‘ê·¼í•˜ëŠ”ë° ì‚¬ìš©ëœ ê°ì²´ë“¤ ì¢…ë£Œ ë©”ì„œë“œ
 	 * @param rs
 	 * @param stmt
 	 * @param conn
 	 * @throws SQLException
 	 */
 	public static void close(ResultSet rs, Statement stmt, Connection conn) {
-		System.out.println("DBHelper.close() ¿À¹ö·Îµù - 1");
+		System.out.println("DBHelper.close() ì˜¤ë²„ë¡œë”© - 1");
 		if(rs != null) {try {rs.close();} catch(Exception e) {e.printStackTrace();}}
 		if(stmt != null) {try {stmt.close();} catch(Exception e) {e.printStackTrace();}}
 		if(conn != null) {try {conn.close();} catch(Exception e) {e.printStackTrace();}}
 	}
 	public static void close(Statement stmt, Connection conn) {
-		System.out.println("DBHelper.close() ¿À¹ö·Îµù - 2");
+		System.out.println("DBHelper.close() ì˜¤ë²„ë¡œë”© - 2");
 		if(stmt != null) {try {stmt.close();} catch(Exception e) {e.printStackTrace();}}
 		if(conn != null) {try {conn.close();} catch(Exception e) {e.printStackTrace();}}
 	} 
