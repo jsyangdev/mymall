@@ -27,7 +27,22 @@ public class SelectMemberController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		System.out.println("SelectMemberController.doPost()");
+		// post방식으로 넘어온 값 받아 vo에 셋팅		
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		int level = Integer.parseInt(request.getParameter("level"));
+		Member member = new Member();
+		member.setId(id);
+		member.setPw(pw);
+		member.setLevel(level);
+		// 서비스계층 메서드 호출
+		memberService = new MemberService();
+		memberService.updateMember(member);
+		
+		
+		
+		
 	}
 
 }

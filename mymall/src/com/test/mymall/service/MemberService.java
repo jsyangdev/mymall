@@ -42,6 +42,21 @@ public class MemberService {
 		}
 	}
 	
+	// 회원정보를 수정하는 메서드를 호출하는 서비스 계층의 메서드
+	public void updateMember(Member member) {
+		System.out.println("MemberService.updateMember()");
+		Connection conn = null;
+		try {
+			conn = DBHelper.getConnection();
+			memberDao = new MemberDao();
+			memberDao.updateMember(conn, member);
+		} catch(Exception e) {
+			e.printStackTrace();	
+		} finally {
+			DBHelper.close(null, conn);
+		}	
+	}
+	
 	/**
 	 * 한 명의 회원정보를 조회하는 메서드를 호출하는 서비스 계층의 메서드
 	 * @param memberNo

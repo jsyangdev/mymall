@@ -29,6 +29,22 @@ public class MemberDao {
 			DBHelper.close(pstmt, conn);
 		}
 	}
+	
+	// 회원정보를 수정하는 메서드
+	public void updateMember(Connection conn, Member member) {
+		System.out.println("MemberDao.updateMember()");
+		String sql = "UPDATE member SET (pw) ";
+		conn.prepareStatement(sql);
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
 	/**
 	 * 한 명의 회원정보를 조회하는 메서드
 	 * @param conn

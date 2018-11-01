@@ -10,6 +10,7 @@
 <body>
 	<h1>내 정보 보기</h1>
 	<form action="${pageContext.request.contextPath}/SelectMemberController" method="post">
+		<input type="hidden" name="pw" value="${member.getPw()}">
 		id : <input type="text" name="id" value="${member.getId()}"><br>
 		level : <input type="text" name="level" value="${member.getLevel()}"><br>
 		<input type="submit" value="회원수정">
