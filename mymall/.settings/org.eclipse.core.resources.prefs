@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/com/test/mymall/commons/DBHelper.java=UTF-8
 encoding//src/com/test/mymall/dao/MemberDao.java=UTF-8
 encoding//src/com/test/mymall/web/OrderListController.java=UTF-8
 encoding/<project>=UTF-8

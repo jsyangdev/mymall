@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.vo.Member;
 
@@ -30,7 +32,36 @@ public class MemberDao {
 		}
 	}
 	
-	// 회원정보를 수정하는 메서드
+	public Member passwordCheck(Connection conn, Member member) {
+		System.out.println("MemberDao.passwordCheck()");
+		String sql = "SELECT * FROM member WHERE no=? AND pw=?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member memberCheck = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, member.getNo());
+			pstmt.setString(2, member.getPw());
+			System.out.println(pstmt+"<---pstmt");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				memberCheck = new Member();
+				memberCheck.setNo(rs.getInt("no"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(rs, pstmt, conn);
+		}
+		return memberCheck;
+		
+	}
+	/**
+	 * 회원정보를 수정하는 메서드
+	 * @param conn
+	 * @param member
+	 * @return
+	 */
 	public Member updateMember(Connection conn, Member member) {
 		System.out.println("MemberDao.updateMember()");
 		System.out.println(member.getPw()+"<---member.getPw()");
@@ -123,7 +154,30 @@ public class MemberDao {
 	 */
 	public void insertMember(Member member) {
 		System.out.println("MemberDao.insertMember()");
-		// Member vo에 셋팅된 값 가지고 오기
+		SqlSession sqlSession = DBHelper.getSqlSession();
+		sqlSession.insert("insertMember", member);
+		sqlSession.commit();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+/*		// Member vo에 셋팅된 값 가지고 오기
 		String id = member.getId();
 		String pw = member.getPw();
 		int level = member.getLevel();
@@ -140,6 +194,6 @@ public class MemberDao {
 			e.printStackTrace();
 		} finally {
 			DBHelper.close(rs, stmt, conn);
-		}	
+		}	*/
 	}
 }

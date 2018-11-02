@@ -42,7 +42,27 @@ public class MemberService {
 		}
 	}
 	
-	// 회원정보를 수정하는 메서드를 호출하는 서비스 계층의 메서드
+	public Member selectMemberForRemove(Member member) {
+		System.out.println("MemberService.selectMemberForRemove()");
+		Connection conn = null;
+		Member memberCheck = null;
+		try {
+			conn = DBHelper.getConnection();
+			MemberDao memberDao = new MemberDao();
+			memberCheck = memberDao.passwordCheck(conn, member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(null, conn);
+		}
+		return memberCheck;
+	
+	}
+	/**
+	 *  회원정보를 수정하는 메서드를 호출하는 서비스 계층의 메서드
+	 * @param member
+	 * @return
+	 */
 	public Member updateMember(Member member) {
 		System.out.println("MemberService.updateMember()");
 		Connection conn = null;
@@ -57,7 +77,6 @@ public class MemberService {
 		}	
 		return member;
 	}
-	
 	/**
 	 * 한 명의 회원정보를 조회하는 메서드를 호출하는 서비스 계층의 메서드
 	 * @param memberNo

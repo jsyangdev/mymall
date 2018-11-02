@@ -15,6 +15,6 @@
 		level : <input type="text" name="level" value="${member.getLevel()}" readonly><br>
 		<input type="submit" value="회원수정">
 	</form>
-	<a href="${pageContext.request.contextPath}/RemoveMemberController?memberNo=${member.getNo()}"><button>회원탈퇴</button></a>
+	<a href="${pageContext.request.contextPath}/passwordCheckController?memberNo=${member.getNo()}"><button>회원탈퇴</button></a>
 </body>
 </html>
