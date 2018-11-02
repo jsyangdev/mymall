@@ -17,17 +17,15 @@ public class OrderListController extends HttpServlet {
 	private MemberItemService memberItemService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("OrderListController.doGet()");
-		// get방식으로 넘어온 값 받기
+		// get諛⑹���쇰� ���댁�� 媛� 諛�湲�
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		// 서비스 계층 호출
+		// ��鍮��� 怨�痢� �몄�
 		memberItemService = new MemberItemService();
 		ArrayList<HashMap<String, Object>> list = memberItemService.selectMemberItem(memberNo);
-		// 세션에 리스트 셋팅
+		// �몄���� 由ъ�ㅽ�� ����
 		request.setAttribute("orderList", list);
-		// orderList view쪽으로 포워딩
+		// orderList view履쎌�쇰� �ъ����
 		request.getRequestDispatcher("/WEB-INF/view/orderList.jsp").forward(request, response);
-		
-		
 		/*
 		 * MemberItemDao.getMemberItemList(int memberNo);
 		 * 

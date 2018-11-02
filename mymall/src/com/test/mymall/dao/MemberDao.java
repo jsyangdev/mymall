@@ -31,20 +31,25 @@ public class MemberDao {
 	}
 	
 	// 회원정보를 수정하는 메서드
-	public void updateMember(Connection conn, Member member) {
+	public Member updateMember(Connection conn, Member member) {
 		System.out.println("MemberDao.updateMember()");
-		String sql = "UPDATE member SET (pw) ";
-		conn.prepareStatement(sql);
-		
-		
-		
-		
-		
-		
+		System.out.println(member.getPw()+"<---member.getPw()");
+		System.out.println(member.getNo()+"<---member.getNo()");
+		String sql = "UPDATE member SET pw=? WHERE no=?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getPw());
+			pstmt.setInt(2, member.getNo());
+			System.out.println(pstmt+"<---pstmt");
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(pstmt, conn);
+		}
+		return member;
 	}
-	
-	
-	
 	/**
 	 * 한 명의 회원정보를 조회하는 메서드
 	 * @param conn

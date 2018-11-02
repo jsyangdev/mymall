@@ -13,8 +13,8 @@ public class MemberService {
 	private MemberDao memberDao; 
 	private MemberItemDao memberItemDao;
 	/**
-	 * íšŒì›íƒˆí‡´ ì²˜ë¦¬ë¥¼ í•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ(ì„œë¹„ìŠ¤ ê³„ì¸µì´ ìˆì–´ì•¼í•˜ëŠ” ì‹¤ì§ˆì ì¸ ì´ìœ )
-	 * RemoveMemberControllerì—ì„œ MemberService.removeMember() í˜¸ì¶œ
+	 * È¸¿øÅ»Åğ Ã³¸®¸¦ ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå(¼­ºñ½º °èÃşÀÌ ÀÖ¾î¾ßÇÏ´Â ½ÇÁúÀûÀÎ ÀÌÀ¯)
+	 * RemoveMemberController¿¡¼­ MemberService.removeMember() È£Ãâ
 	 * @param no
 	 */
 	public void removeMember(int no) {
@@ -22,7 +22,7 @@ public class MemberService {
 		Connection conn = null;
 		try {
 			conn = DBHelper.getConnection();
-			conn.setAutoCommit(false); 	// ìë™ìœ¼ë¡œ ì»¤ë°‹í•˜ì§€ ì•Šê² ë‹¤.(ì»¤ë°‹ ì êµ¬ê¸°)
+			conn.setAutoCommit(false); 	// ÀÚµ¿À¸·Î Ä¿¹ÔÇÏÁö ¾Ê°Ú´Ù.(Ä¿¹Ô Àá±¸±â)
 			// 1 function
 			memberDao = new MemberDao();
 			memberDao.deleteMember(conn, no);
@@ -42,8 +42,8 @@ public class MemberService {
 		}
 	}
 	
-	// íšŒì›ì •ë³´ë¥¼ ìˆ˜ì •í•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
-	public void updateMember(Member member) {
+	// È¸¿øÁ¤º¸¸¦ ¼öÁ¤ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
+	public Member updateMember(Member member) {
 		System.out.println("MemberService.updateMember()");
 		Connection conn = null;
 		try {
@@ -55,10 +55,11 @@ public class MemberService {
 		} finally {
 			DBHelper.close(null, conn);
 		}	
+		return member;
 	}
 	
 	/**
-	 * í•œ ëª…ì˜ íšŒì›ì •ë³´ë¥¼ ì¡°íšŒí•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
+	 * ÇÑ ¸íÀÇ È¸¿øÁ¤º¸¸¦ Á¶È¸ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
 	 * @param memberNo
 	 * @return member
 	 */
@@ -79,7 +80,7 @@ public class MemberService {
 				
 	}
 	/**
-	 * ë¡œê·¸ì¸ ì²˜ë¦¬ë¥¼ í•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
+	 * ·Î±×ÀÎ Ã³¸®¸¦ ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
 	 * @param member
 	 * @return memberLogin
 	 */
@@ -90,7 +91,7 @@ public class MemberService {
 		return memberLogin;
 	}
 	/**
-	 * íšŒì›ê°€ì… ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
+	 * È¸¿ø°¡ÀÔ ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
 	 * @param member
 	 */
 	public void addMember(Member member) {
