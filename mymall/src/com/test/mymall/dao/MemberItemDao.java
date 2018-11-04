@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.vo.MemberItem;
 
@@ -17,7 +19,7 @@ public class MemberItemDao {
 	 * @param conn
 	 * @param no
 	 */
-	public void deleteMemberItem(Connection conn, int no) {
+	public void deleteMemberItem(SqlSession sqlSession, int no) {
 		System.out.println("MemberItemDao.deleteMemberItem()");
 		String sql="DELETE FROM member_item WHERE member_no=?";
 		PreparedStatement pstmt = null;

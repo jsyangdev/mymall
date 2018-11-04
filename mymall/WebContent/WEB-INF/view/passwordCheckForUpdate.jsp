@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Password Check For Update</title>
 </head>
 <body>
-	<h1>회원탈퇴 비번체크</h1>
-	<form action="${pageContext.request.contextPath}/PasswordCheckController" method="post">
-		<input type="hidden" name="no" value="${no}">
+	<h1>Password Check For Update</h1>
+	<form action="${pageContext.request.contextPath}/PasswordCheckForUpdateController" method="post">
+		<input type="hidden" name="no" value="${loginMember.getNo()}">
 		pw : <input type="text" name="pw">
-		<input type="submit" value="비번체크">
+		<input type="submit" value="비번확인">
 	</form>
 </body>
 </html>

@@ -10,31 +10,32 @@ import javax.servlet.http.HttpServletResponse;
 import com.test.mymall.service.MemberService;
 import com.test.mymall.vo.Member;
 
-@WebServlet("/passwordCheckController")
-public class passwordCheckController extends HttpServlet {
+@WebServlet("/PasswordCheckController")
+public class PasswordCheckController extends HttpServlet {
 	private MemberService memberService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("passwordCheckController.doGet()");
 		int no = Integer.parseInt(request.getParameter("memberNo"));
+		System.out.println(no+"<---no PasswordCheckController.doGet()");
 		request.setAttribute("no", no);
-		request.getRequestDispatcher("/WEB-INF/view/passwordCheck.jsp").forward(request, response);	
+		request.getRequestDispatcher("/WEB-INF/view/passwordCheck.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("passwordCheckController.doPost()");
-		// È­¸é¿¡¼­ µ¥ÀÌÅÍ ¹Þ¾Æ¿Í vo¿¡ ¼ÂÆÃ ½ÃÅ°±â
+		// postë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¨ ê°’ë“¤ì„ voì— ì…‹íŒ…
 		int no = Integer.parseInt(request.getParameter("no"));
 		String pw = request.getParameter("pw");
 		Member member = new Member();
-		memberService = new MemberService();
 		member.setNo(no);
 		member.setPw(pw);
-		Member memberCheck = memberService.selectMemberForRemove(member);
-		System.out.println(memberCheck+"<---memberCheck");
-		// memberCheckº¯¼ö¿¡ null°ª À¯¹«¿¡ µû¶ó °æ·Î ´Ù¸£°Ô ¼³Á¤
-		if(memberCheck != null) {
-			request.setAttribute("memberCheck", memberCheck);
-			response.sendRedirect(request.getContextPath()+"/RemoveMemberController");
+		// ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ í˜¸ì¶œ
+		memberService = new MemberService();
+		int memberNo = memberService.selectMemberForRemove(member);
+		System.out.println(memberNo+"<---memberNo PasswordCheckController.doPost()");
+		// memberNoê°€ 0(ë¹„ë²ˆ ë¶ˆì¼ì¹˜)ì¸ì§€ 0ì´ ì•„ë‹Œì§€(ë¹„ë²ˆ ì¼ì¹˜) í™•ì¸ í›„, ê²½ë¡œ ì„¤ì •
+		if(memberNo != 0) {
+			response.sendRedirect(request.getContextPath()+"/RemoveMemberController?memberNo="+memberNo);
 		} else {
 			request.getRequestDispatcher("/WEB-INF/view/passwordCheck.jsp").forward(request, response);
 		}

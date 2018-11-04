@@ -14,28 +14,13 @@ import com.test.mymall.vo.Member;
 public class RemoveMemberController extends HttpServlet {
 	private MemberService memberService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/*		System.out.println("RemoveMemberController.doGet()");
+		System.out.println("RemoveMemberController.doGet()");
+		// getë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¨ ê°’ ë°›ì•„ ë§¤ê°œë³€ìˆ˜ë¡œ ì „ë‹¬
 		int no = Integer.parseInt(request.getParameter("memberNo"));
-		request.setAttribute("no", no);
-		request.getRequestDispatcher("/WEB-INF/view/passwordCheck.jsp").forward(request, response);*/
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/*		System.out.println("RemoveMemberController.doPost()");
-		// È­¸é¿¡¼­ µ¥ÀÌÅÍ ¹Ş¾Æ¿Í vo¿¡ ¼ÂÆÃ ½ÃÅ°±â
-		int no = Integer.parseInt(request.getParameter("no"));
-		String pw = request.getParameter("pw");
-		Member member = new Member();
-		member.setNo(no);
-		member.setPw(pw);
-		Member memberCheck = memberService.selectMemberForRemove(member);*/
-		
-		
-		
-		
-		
-		
-		
+		System.out.println(no+"<---no RemoveMemberController.doGet()");
+		memberService = new MemberService();
+		memberService.removeMember(no);
+		response.sendRedirect(request.getContextPath()+"/IndexController");
 		
 	}
 

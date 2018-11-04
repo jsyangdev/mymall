@@ -15,23 +15,20 @@ public class SelectMemberController extends HttpServlet {
 	private MemberService memberService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("SelectMemberController.doGet()");
-		// get¹æ½ÄÀ¸·Î ³Ñ¾î¿Â °ª ¹Ş±â
+		// getë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¨ ê°’ ë°›ê¸°
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		// ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå È£Ãâ
+		System.out.println(memberNo+"<---memberNo SelectMemberController.doGet()");
+		// ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ í˜¸ì¶œ
 		memberService = new MemberService();
-		Member member = memberService.selectMember(memberNo);
-		// request°´Ã¼ ³» ¼Ó¼º ¼ÂÆÃ
+		Member member = memberService.selectOneMember(memberNo);
+		// requestê°ì²´ ë‚´ ì†ì„± ì…‹íŒ…
 		request.setAttribute("member", member);
-		// Æ÷¿öµù
+		// í¬ì›Œë”©
 		request.getRequestDispatcher("/WEB-INF/view/selectMember.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("SelectMemberController.doPost()");
-		// post¹æ½ÄÀ¸·Î ³Ñ¾î¿Â °ª ¹Ş¾Æ vo¿¡ ¼ÂÆÃ		
-		int no = Integer.parseInt(request.getParameter("no"));
-		String id = request.getParameter("id");
-		int level = Integer.parseInt(request.getParameter("level"));
-		response.sendRedirect(request.getContextPath()+"/UpdateMemberController?memberNo="+no+"&memberID="+id+"&memberLevel="+level);
+		response.sendRedirect(request.getContextPath()+"/PasswordCheckForUpdateController");
 	}
 }

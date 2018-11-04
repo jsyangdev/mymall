@@ -14,37 +14,26 @@ import com.test.mymall.vo.Member;
 @WebServlet("/UpdateMemberController")
 public class UpdateMemberController extends HttpServlet {
 	private MemberService memberService;
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("UpdateMemberController.doGet()");
-		int no = Integer.parseInt(request.getParameter("memberNo"));
-		String id = request.getParameter("memberID");
-		int level = Integer.parseInt(request.getParameter("memberLevel"));
-		Member member = new Member();
-		member.setNo(no);
-		member.setId(id);
-		member.setLevel(level);
-		request.setAttribute("member", member);
+		int no = Integer.parseInt(request.getParameter("memberNo"));		
+		request.setAttribute("no", no);
 		request.getRequestDispatcher("/WEB-INF/view/updateMember.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("UpdateMemberController.doPost()");
-		// È­¸é¿¡¼­ ÀÔ·Âµ¥ÀÌÅÍ ¹Ş¾Æ vo¿¡ ¼ÂÆÃ
+		// postë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¨ ê°’ë“¤ ë°›ì•„ voì— ì…‹íŒ…í•˜ê¸°
 		int no = Integer.parseInt(request.getParameter("no"));
-		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		int level = Integer.parseInt(request.getParameter("level"));
+		System.out.println(no+"<---no UpdateMemberController");
+		System.out.println(pw+"<---pw UpdateMemberController");
 		Member member = new Member();
 		member.setNo(no);
-		member.setId(id);
 		member.setPw(pw);
-		member.setLevel(level);
-		// ¼­ºñ½º °èÃş ¸Ş¼­µå È£Ãâ
+		// ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ í˜¸ì¶œ
 		memberService = new MemberService();
-		Member memberUpdate = memberService.updateMember(member);
-		HttpSession session = request.getSession();
-		session.setAttribute("loginMember", memberUpdate);
+		memberService.updateMember(member);
 		response.sendRedirect(request.getContextPath()+"/IndexController");
 	}
 

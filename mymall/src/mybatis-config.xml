@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration
-PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-config.dtd">
-<configuration>		<!-- 루트태그 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
-  <environments default="development">
-    <environment id="development">
-    <!-- classForName, getConnection 대신함 -->
-      <transactionManager type="JDBC"/>
-      <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/mall?useUnicode=true&amp;characterEncoding=utf8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="java0000"/>
-      </dataSource>
-    </environment>
-  </environments>
-  <mappers>	<!-- 쿼리가 모여있는 파일 -->
-    <mapper resource="com/test/mymall/dao/MemberMapper.xml"/>
-    <!-- <mapper resource="classpath:com/test/mymall/dao/Item.xml"/> -->
-  </mappers>
-  
+<configuration>	<!-- 루트태그 -->
+	<!-- classForName, getConnection 대신함 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/mall?useUnicode=true&amp;characterEncoding=utf8" />
+				<property name="username" value="root" />
+				<property name="password" value="java0000" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- sql 맵퍼 -->
+	<mappers>
+		<mapper resource="com/test/mymall/dao/MemberMapper.xml" />
+		<!-- <mapper resource="classpath:com/test/mymall/dao/Item.xml"/> -->
+	</mappers>
+
 </configuration>

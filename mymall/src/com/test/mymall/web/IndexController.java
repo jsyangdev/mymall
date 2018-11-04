@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/IndexController")
 public class IndexController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("IndexController.doGet()");	// Ãâ·Â ±ÔÄ¢
+		System.out.println("IndexController.doGet()");	// ì¶œë ¥ê·œì¹™
 		request.getRequestDispatcher("WEB-INF/view/index.jsp").forward(request, response);
 	}
 

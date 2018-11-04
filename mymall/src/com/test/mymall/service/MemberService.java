@@ -4,6 +4,8 @@ package com.test.mymall.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
 import com.test.mymall.dao.MemberItemDao;
@@ -13,19 +15,20 @@ public class MemberService {
 	private MemberDao memberDao; 
 	private MemberItemDao memberItemDao;
 	/**
-	 * È¸¿øÅ»Åğ Ã³¸®¸¦ ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå(¼­ºñ½º °èÃşÀÌ ÀÖ¾î¾ßÇÏ´Â ½ÇÁúÀûÀÎ ÀÌÀ¯)
-	 * RemoveMemberController¿¡¼­ MemberService.removeMember() È£Ãâ
+	 * íšŒì›íƒˆí‡´ ì²˜ë¦¬ë¥¼ í•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ(ì„œë¹„ìŠ¤ ê³„ì¸µì´ ìˆì–´ì•¼í•˜ëŠ” ì‹¤ì§ˆì ì¸ ì´ìœ )
+	 * RemoveMemberControllerì—ì„œ MemberService.removeMember() í˜¸ì¶œ
 	 * @param no
 	 */
 	public void removeMember(int no) {
 		System.out.println("MemberService.removeMember()");
-		Connection conn = null;
+		SqlSession sqlSession = DBHelper.getSqlSession();
+		// 1 function
+		memberDao = new MemberDao();
+		memberDao.deleteMember(sqlSession, no);
+		// 2 function
+		memberItemDao = new MemberItemDao();
+/*		
 		try {
-			conn = DBHelper.getConnection();
-			conn.setAutoCommit(false); 	// ÀÚµ¿À¸·Î Ä¿¹ÔÇÏÁö ¾Ê°Ú´Ù.(Ä¿¹Ô Àá±¸±â)
-			// 1 function
-			memberDao = new MemberDao();
-			memberDao.deleteMember(conn, no);
 			// 2 function
 			memberItemDao = new MemberItemDao();
 			memberItemDao.deleteMemberItem(conn, no);
@@ -37,85 +40,81 @@ public class MemberService {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		} finally {
-			DBHelper.close(null, null, conn);
-		}
-	}
-	
-	public Member selectMemberForRemove(Member member) {
-		System.out.println("MemberService.selectMemberForRemove()");
-		Connection conn = null;
-		Member memberCheck = null;
-		try {
-			conn = DBHelper.getConnection();
-			MemberDao memberDao = new MemberDao();
-			memberCheck = memberDao.passwordCheck(conn, member);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBHelper.close(null, conn);
-		}
-		return memberCheck;
-	
+		}*/
 	}
 	/**
-	 *  È¸¿øÁ¤º¸¸¦ ¼öÁ¤ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
+	 * íšŒì›íƒˆí‡´ ì „, ë¹„ë²ˆ í™•ì¸ì„ ìœ„í•œ ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
 	 * @param member
 	 * @return
 	 */
-	public Member updateMember(Member member) {
-		System.out.println("MemberService.updateMember()");
-		Connection conn = null;
-		try {
-			conn = DBHelper.getConnection();
-			memberDao = new MemberDao();
-			memberDao.updateMember(conn, member);
-		} catch(Exception e) {
-			e.printStackTrace();	
-		} finally {
-			DBHelper.close(null, conn);
-		}	
-		return member;
+	public int selectMemberForRemove(Member member) {
+		System.out.println("MemberService.selectMemberForRemove()");
+		SqlSession sqlSession = DBHelper.getSqlSession();	// í†µì¼ì„±ì„ ìœ„í•´ ì„œë¹„ìŠ¤ì—ì„œ getSqlSession() í˜¸ì¶œ
+		memberDao = new MemberDao();
+		int resultNo = memberDao.selectMemberForpasswordCheckBeforeRemove(sqlSession, member);
+
+		return resultNo;
 	}
 	/**
-	 * ÇÑ ¸íÀÇ È¸¿øÁ¤º¸¸¦ Á¶È¸ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
+	 *  íšŒì›ì •ë³´ë¥¼ ìˆ˜ì •í•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
+	 * @param member
+	 * @return
+	 */
+	public void updateMember(Member member) {
+		System.out.println("MemberService.updateMember()");
+		SqlSession sqlSession = DBHelper.getSqlSession();	// í†µì¼ì„±ì„ ìœ„í•´ ì„œë¹„ìŠ¤ì—ì„œ getSqlSession() í˜¸ì¶œ
+		memberDao = new MemberDao();
+		memberDao.updateMember(sqlSession, member);
+	}
+	/**
+	 * pwê°€ dbë‚´ ë°ì´í„°ì™€ ì¼ì¹˜í•˜ëŠ”ì§€ ì¡°íšŒí•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
 	 * @param memberNo
 	 * @return member
 	 */
-	public Member selectMember(int memberNo) {
+	public Member selectForPasswordCheck(Member member) {
 		System.out.println("MemberService.selectMember()");
-		Member member = null;
-		Connection conn = null;
-		try {
-			conn = DBHelper.getConnection();
-			memberDao = new MemberDao();
-			member = memberDao.selectMember(conn, memberNo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBHelper.close(null, conn);
-		}
-		return member;
-				
+		memberDao = new MemberDao();
+		SqlSession sqlSession = DBHelper.getSqlSession();	// í†µì¼ì„±ì„ ìœ„í•´ ì„œë¹„ìŠ¤ì—ì„œ getSqlSession() í˜¸ì¶œ
+		memberDao = new MemberDao();
+		Member memberCheck = memberDao.selectMemberForPasswordCheck(sqlSession, member);
+		
+		return memberCheck;
 	}
 	/**
-	 * ·Î±×ÀÎ Ã³¸®¸¦ ÇÏ´Â ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
+	 * í•œ ëª…ì˜ íšŒì›ì •ë³´ë¥¼ ì¡°íšŒí•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
+	 * @param memberNo
+	 * @return member
+	 */
+	public Member selectOneMember(int memberNo) {
+		System.out.println("MemberService.selectMember()");
+		Member member = null;
+		SqlSession sqlSession = DBHelper.getSqlSession();	// í†µì¼ì„±ì„ ìœ„í•´ ì„œë¹„ìŠ¤ì—ì„œ getSqlSession() í˜¸ì¶œ
+		memberDao = new MemberDao();
+		member = memberDao.selectMember(sqlSession, memberNo);
+		
+		return member;			
+	}
+	/**
+	 * ë¡œê·¸ì¸ ì²˜ë¦¬ë¥¼ í•˜ëŠ” ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
 	 * @param member
-	 * @return memberLogin
+	 * @return loginMember
 	 */
 	public Member loginMember(Member member) {
 		System.out.println("MemberService.loginMember()");	
 		memberDao = new MemberDao();
-		Member memberLogin = memberDao.login(member);
-		return memberLogin;
+		SqlSession sqlSession = DBHelper.getSqlSession();	// í†µì¼ì„±ì„ ìœ„í•´ ì„œë¹„ìŠ¤ì—ì„œ getSqlSession() í˜¸ì¶œ
+		Member loginMember = memberDao.login(sqlSession, member);
+		
+		return loginMember;
 	}
 	/**
-	 * È¸¿ø°¡ÀÔ ¸Ş¼­µå¸¦ È£ÃâÇÏ´Â ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå
+	 * íšŒì›ê°€ì… ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ëŠ” ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ
 	 * @param member
 	 */
 	public void addMember(Member member) {
 		System.out.println("MemberService.addMember()");
 		memberDao = new MemberDao();
-		memberDao.insertMember(member);
+		SqlSession sqlSession = DBHelper.getSqlSession();	// í†µì¼ì„±ì„ ìœ„í•´ ì„œë¹„ìŠ¤ì—ì„œ getSqlSession() í˜¸ì¶œ
+		memberDao.insertMember(sqlSession, member);
 	}
 }

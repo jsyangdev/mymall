@@ -6,6 +6,7 @@
 <title>addMember</title>
 </head>
 <body>
+	<h1>Add Member Form</h1>
 	<form action="${pageContext.request.contextPath}/AddMemberController" method="post">
 		id : <input type="text" name=id><br>
 		pw : <input type="text" name=pw><br>

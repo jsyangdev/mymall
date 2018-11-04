@@ -22,26 +22,26 @@ public class LoginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController.doPost()");
-		// post¹æ½ÄÀ¸·Î ³Ñ¾î¿À´Â °ªµé ÇÑ±Û±úÁü ¾øµµ·Ï ÀÎÄÚµù
+		// postë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¨ ì…ë ¥ë°ì´í„°ë“¤ í•œê¸€ê¹¨ì§ ì—†ê²Œ ì¸ì½”ë”©
 		request.setCharacterEncoding("utf-8");
-		// È­¸é¿¡¼­ ÀÔ·ÂÇÑ µ¥ÀÌÅÍ ¹Ş±â
+		// ì…ë ¥ë°ì´í„°ë“¤ ë°›ê¸°
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		// vo¿¡ È­¸é¿¡¼­ ÀÔ·ÂÇÑ µ¥ÀÌÅÍ ¼ÂÆÃ
+		// voì— ì…‹íŒ…í•˜ê¸°
 		Member member = new Member();
 		member.setId(id);	
 		member.setPw(pw);
-		// memberservice.loginMember() È£Ãâ
+		// memberservice.loginMember() í˜¸ì¶œ
 		memberservice = new MemberService();
 		Member loginMember = memberservice.loginMember(member);
-		// ·Î±×ÀÎ µÇ¾ú´ÂÁö È®ÀÎ
+		// ë¡œê·¸ì¸ ë˜ì—ˆëŠ”ì§€ í™•ì¸
 		if(loginMember != null) {
-			System.out.println("·Î±×ÀÎ ¼º°ø !");
+			System.out.println("ë¡œê·¸ì¸ ì„±ê³µ !");
 			HttpSession session = request.getSession();
 			session.setAttribute("loginMember", loginMember);
 			response.sendRedirect(request.getContextPath()+"/IndexController");
 		} else {
-			System.out.println("·Î±×ÀÎ ½ÇÆĞ !");
+			System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨ !");
 			request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 		}
 	}

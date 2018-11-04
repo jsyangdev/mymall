@@ -13,11 +13,11 @@ import com.test.mymall.vo.Member;
 
 @WebServlet("/AddMemberController")
 public class AddMemberController extends HttpServlet {
-	// # ÄÁÆ®·Ñ·¯ÀÇ ¿ªÇÒ
-	// 1. ¶ó¿ìÅÍ
-	// 2. ¸ğµ¨ È£Ãâ
-	// 3. ºä ·»´õ¸µ
-	private MemberService memberService;	// À§Ä¡ Áß¿ä
+	// # ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ì—­í• 
+	// 1. ë¼ìš°í„°
+	// 2. ëª¨ë¸ í˜¸ì¶œ
+	// 3. ë·° ë Œë”ë§
+	private MemberService memberService;	// ìœ„ì¹˜ ì¤‘ìš”
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doGet()");
 		request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
@@ -25,19 +25,19 @@ public class AddMemberController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doPost()");
-		// post¹æ½ÄÀ¸·Î ³Ñ¾î¿À´Â °ªµé ÇÑ±Û±úÁü ¾øµµ·Ï ÀÎÄÚµù
+		// postë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¨ ì…ë ¥ë°ì´í„° í•œê¸€ê¹¨ì§ ì—†ê²Œ ì¸ì½”ë”©
 		request.setCharacterEncoding("utf-8");
-		// È­¸é¿¡¼­ ÀÔ·ÂÇÑ µ¥ÀÌÅÍ ¹Ş±â
+		// ì…ë ¥ë°ì´í„° ë°›ê¸°
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		String levelOfString = (String)request.getParameter("level");
 		int level = Integer.parseInt(levelOfString);
-		// Member(vo) »ı¼º ÈÄ, ÀÔ·Âµ¥ÀÌÅÍ ¼ÂÆÃ
+		// Member(vo) ìƒì„± í›„, ê°’ ì…‹íŒ…
 		Member member = new Member();
 		member.setId(id);
 		member.setPw(pw);
 		member.setLevel(level);
-		// memberService »ı¼º ÈÄ, addMember¸Ş¼­µå È£Ãâ
+		// memberService ìƒì„± í›„, addMemberë©”ì„œë“œ í˜¸ì¶œ
 		memberService = new MemberService();
 		memberService.addMember(member);
 		response.sendRedirect(request.getContextPath()+"/LoginController");
