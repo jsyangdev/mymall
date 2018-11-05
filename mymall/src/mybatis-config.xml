@@ -18,7 +18,7 @@
 	<!-- sql 맵퍼 -->
 	<mappers>
 		<mapper resource="com/test/mymall/dao/MemberMapper.xml" />
-		<!-- <mapper resource="classpath:com/test/mymall/dao/Item.xml"/> -->
+		<mapper resource="com/test/mymall/dao/ItemMapper.xml" />
 	</mappers>
 
 </configuration>

@@ -23,5 +23,7 @@
 	  	</tr>
 	</c:forEach>
 	</table>
+	<a href="${pageContext.request.contextPath}/ItemController"><<</a>	<!-- 처음페이지로 -->
+	<a href="${pageContext.request.contextPath}/ItemController"><</a>	<!-- 이전페이지로 -->
 </body>
 </html>

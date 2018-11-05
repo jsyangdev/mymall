@@ -15,8 +15,8 @@ public class MemberService {
 	private MemberDao memberDao; 
 	private MemberItemDao memberItemDao;
 	/**
-	 * 회원탈퇴 처리를 하는 메서드를 호출하는 서비스 계층의 메서드(서비스 계층이 있어야하는 실질적인 이유)
-	 * RemoveMemberController에서 MemberService.removeMember() 호출
+	 * �������� 泥�由щ�� ���� 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����(��鍮��� 怨�痢듭�� ���댁�쇳���� �ㅼ����� �댁��)
+	 * RemoveMemberController���� MemberService.removeMember() �몄�
 	 * @param no
 	 */
 	public void removeMember(int no) {
@@ -40,81 +40,81 @@ public class MemberService {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		}*/
+}*/
 	}
 	/**
-	 * 회원탈퇴 전, 비번 확인을 위한 메서드를 호출하는 서비스 계층의 메서드
+	 * �������� ��, 鍮�踰� ���몄�� ���� 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����
 	 * @param member
 	 * @return
 	 */
 	public int selectMemberForRemove(Member member) {
 		System.out.println("MemberService.selectMemberForRemove()");
-		SqlSession sqlSession = DBHelper.getSqlSession();	// 통일성을 위해 서비스에서 getSqlSession() 호출
+		SqlSession sqlSession = DBHelper.getSqlSession();	// �듭�쇱�깆�� ���� ��鍮��ㅼ���� getSqlSession() �몄�
 		memberDao = new MemberDao();
 		int resultNo = memberDao.selectMemberForpasswordCheckBeforeRemove(sqlSession, member);
 
 		return resultNo;
 	}
 	/**
-	 *  회원정보를 수정하는 메서드를 호출하는 서비스 계층의 메서드
+	 *  ������蹂대�� �������� 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����
 	 * @param member
 	 * @return
 	 */
 	public void updateMember(Member member) {
 		System.out.println("MemberService.updateMember()");
-		SqlSession sqlSession = DBHelper.getSqlSession();	// 통일성을 위해 서비스에서 getSqlSession() 호출
+		SqlSession sqlSession = DBHelper.getSqlSession();	// �듭�쇱�깆�� ���� ��鍮��ㅼ���� getSqlSession() �몄�
 		memberDao = new MemberDao();
 		memberDao.updateMember(sqlSession, member);
 	}
 	/**
-	 * pw가 db내 데이터와 일치하는지 조회하는 메서드를 호출하는 서비스 계층의 메서드
+	 * pw媛� db�� �곗�댄�곗�� �쇱�����吏� 議고������ 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����
 	 * @param memberNo
 	 * @return member
 	 */
 	public Member selectForPasswordCheck(Member member) {
-		System.out.println("MemberService.selectMember()");
+		System.out.println("MemberService.selectForPasswordCheck()");
 		memberDao = new MemberDao();
-		SqlSession sqlSession = DBHelper.getSqlSession();	// 통일성을 위해 서비스에서 getSqlSession() 호출
+		SqlSession sqlSession = DBHelper.getSqlSession();	// �듭�쇱�깆�� ���� ��鍮��ㅼ���� getSqlSession() �몄�
 		memberDao = new MemberDao();
 		Member memberCheck = memberDao.selectMemberForPasswordCheck(sqlSession, member);
 		
 		return memberCheck;
 	}
 	/**
-	 * 한 명의 회원정보를 조회하는 메서드를 호출하는 서비스 계층의 메서드
+	 * �� 紐��� ������蹂대�� 議고������ 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����
 	 * @param memberNo
 	 * @return member
 	 */
 	public Member selectOneMember(int memberNo) {
 		System.out.println("MemberService.selectMember()");
 		Member member = null;
-		SqlSession sqlSession = DBHelper.getSqlSession();	// 통일성을 위해 서비스에서 getSqlSession() 호출
+		SqlSession sqlSession = DBHelper.getSqlSession();	// �듭�쇱�깆�� ���� ��鍮��ㅼ���� getSqlSession() �몄�
 		memberDao = new MemberDao();
 		member = memberDao.selectMember(sqlSession, memberNo);
 		
 		return member;			
 	}
 	/**
-	 * 로그인 처리를 하는 메서드를 호출하는 서비스 계층의 메서드
+	 * 濡�洹몄�� 泥�由щ�� ���� 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����
 	 * @param member
 	 * @return loginMember
 	 */
 	public Member loginMember(Member member) {
 		System.out.println("MemberService.loginMember()");	
 		memberDao = new MemberDao();
-		SqlSession sqlSession = DBHelper.getSqlSession();	// 통일성을 위해 서비스에서 getSqlSession() 호출
+		SqlSession sqlSession = DBHelper.getSqlSession();	// �듭�쇱�깆�� ���� ��鍮��ㅼ���� getSqlSession() �몄�
 		Member loginMember = memberDao.login(sqlSession, member);
 		
 		return loginMember;
 	}
 	/**
-	 * 회원가입 메서드를 호출하는 서비스 계층의 메서드
+	 * ����媛��� 硫�����瑜� �몄����� ��鍮��� 怨�痢듭�� 硫�����
 	 * @param member
 	 */
 	public void addMember(Member member) {
 		System.out.println("MemberService.addMember()");
 		memberDao = new MemberDao();
-		SqlSession sqlSession = DBHelper.getSqlSession();	// 통일성을 위해 서비스에서 getSqlSession() 호출
+		SqlSession sqlSession = DBHelper.getSqlSession();	// �듭�쇱�깆�� ���� ��鍮��ㅼ���� getSqlSession() �몄�
 		memberDao.insertMember(sqlSession, member);
 	}
 }
