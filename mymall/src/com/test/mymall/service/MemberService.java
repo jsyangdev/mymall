@@ -29,7 +29,10 @@ public class MemberService {
 		memberItemDao = new MemberItemDao();
 /*		
 		try {
-			// 2 function
+			// ---1 function
+			memberDao= new MemberDao();
+			memberDao.deleteMember(conn, no);
+			// ---2 function
 			memberItemDao = new MemberItemDao();
 			memberItemDao.deleteMemberItem(conn, no);
 			conn.commit();

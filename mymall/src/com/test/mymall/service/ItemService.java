@@ -21,18 +21,17 @@ public class ItemService {
 		System.out.println(rowCount+"<---rowCount");
 		// 한 페이지당 몇 개의 데이터를 보여줄 것인지, rowsPerPage 정하기
 		int rowsPerPage = 10;
+		// startRow 구하기
+		int startRow = (currentPage-1)*rowsPerPage;
+		SqlSession sqlSessionForItemList = DBHelper.getSqlSession();
 		// currentPage, rowsPerPage를 해쉬맵에 담기
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("currentPage", currentPage);
+		map.put("startRow", startRow);
 		map.put("rowsPerPage", rowsPerPage);
-		ArrayList<Item> itemList = itemDao.selectAllItem(sqlSession, map);
-		
-		
-		
-		
+		ArrayList<Item> itemList = itemDao.selectAllItem(sqlSessionForItemList, map);
 		System.out.println("------------ ItemService.itemList() END ------------");
-		return null;
-		//return itemList;
+		
+		return itemList;
 	}
 	
 }

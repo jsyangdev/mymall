@@ -37,6 +37,6 @@ public class ItemDao {
 		sqlSession.close();
 		System.out.println(itemList+"<---itemList ItemDao.selectAllItem()");
 		System.out.println("------------ ItemDao.selectAllItem() END ------------");	
-		return itemList;	
+		return itemList;
 	}
 }

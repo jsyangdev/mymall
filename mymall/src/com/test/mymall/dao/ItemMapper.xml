@@ -10,6 +10,6 @@
 		SELECT COUNT(*) AS rowCount FROM item
 	</select>	
 	<select id="selectItemList" resultType="com.test.mymall.vo.Item">
-		SELECT no as no, name as name, price as price FROM item ORDER BY no LIMIT (#{currentPage}-1)*#{rowsPerPage}, #{rowsPerPage}
+		SELECT no as no, name as name, price as price FROM item ORDER BY no LIMIT #{startRow}, #{rowsPerPage}
 	</select>
 </mapper>
