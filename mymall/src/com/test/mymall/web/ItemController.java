@@ -2,6 +2,7 @@ package com.test.mymall.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,25 +21,28 @@ public class ItemController extends HttpServlet {
 		System.out.println("ItemController.doGet()");
 		itemService = new ItemService();
 		ArrayList<Item> itemList;
-		// get¹æ½ÄÀ¸·Î ³Ñ¾î¿À´Â currentPage°¡ ÀÖ´Â °æ¿ì ¹Ş±â
-		int currentPage = 1;	// ³Ñ¾î¿ÀÁö¾Ê´Â °æ¿ì
+		// getë°©ì‹ìœ¼ë¡œ ë„˜ì–´ì˜¤ëŠ” currentPageê°€ ìˆëŠ” ê²½ìš° ë°›ê¸°
+		int currentPage = 1;	// ë„˜ì–´ì˜¤ì§€ì•ŠëŠ” ê²½ìš°
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		// currentPage¸¦ ¸Å°³º¯¼ö·Î ¼­ºñ½º °èÃşÀÇ ¸Ş¼­µå È£Ãâ
 		System.out.println(currentPage+"<---currentPage ItemService.doGet()");
-		itemList = itemService.itemList(currentPage);
-		
-		
-		//-------------------------------------------------------------------------
-		
-		
-		
-		
-		
-		
-		
+		// 
+		int rowsPerPage = 10;
+		// # lastPage êµ¬í•˜ê¸°
+		// ì „ì²´ í–‰ ìˆ˜ êµ¬í•˜ê¸°
+		int rowCount = itemService.rowCount();
+		// lastPage êµ¬í•˜ê¸°
+		int lastPage = rowCount/rowsPerPage;
+		if(rowCount % rowsPerPage != 0) {
+			lastPage++;
+		}
+		// currentPageë¥¼ ë§¤ê°œë³€ìˆ˜ë¡œ ì„œë¹„ìŠ¤ ê³„ì¸µì˜ ë©”ì„œë“œ í˜¸ì¶œ
+		itemList = itemService.itemList(currentPage, rowsPerPage);
 		request.setAttribute("itemList", itemList);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("rowCount", rowCount);
+		request.setAttribute("lastPage", lastPage);
 		request.getRequestDispatcher("/WEB-INF/view/itemList.jsp").forward(request, response);
 		System.out.println("------------ ItemController.doGet() END ------------");
 	}

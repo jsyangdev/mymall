@@ -12,7 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.vo.Item;
 
-public class ItemDao {
+public class ItemDao2 {
 
 	public int totalRowCount(SqlSession sqlSession) {
 		System.out.println("ItemDao.totalRowCount()");
@@ -30,14 +30,16 @@ public class ItemDao {
 	 * @return
 	 */
 	//	HashMap���� �Ű����� �����ߵ� ��.
-	public ArrayList<Item> selectAllItem(SqlSession sqlSession, HashMap<String, Object> map) {
+	public ArrayList<HashMap<String, Object>> selectAllItem(SqlSession sqlSession, HashMap<String, Object> map) {
 		System.out.println("ItemDao.selectAllItem()");
-		ArrayList<Item> itemList = (ArrayList)sqlSession.selectList("selectItemList", map);
+		ArrayList<HashMap<String, Object>> itemList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap = (HashMap)sqlSession.selectList("selectItemList", map); 
 		sqlSession.commit();
 		sqlSession.close();
+		itemList.add(hashMap);
 		System.out.println(itemList+"<---itemList ItemDao.selectAllItem()");
 		System.out.println("------------ ItemDao.selectAllItem() END ------------");	
 		return itemList;
 	}
-
 }

@@ -11,20 +11,28 @@ import com.test.mymall.vo.Item;
 
 public class ItemService {
 	private ItemDao itemDao;
-	public ArrayList<Item> itemList(int currentPage) {
+	public int rowCount() {
+		System.out.println("ItemService.rowCount()");
+		itemDao = new ItemDao();
+		SqlSession sqlSession = DBHelper.getSqlSession();
+		// ## ì•„ì´í…œë¦¬ìŠ¤íŠ¸ í˜ì´ì§•
+		// ì „ì²´ ë°ì´í„°ì˜ ìˆ˜ êµ¬í•˜ê¸°
+		int rowCount = itemDao.totalRowCount(sqlSession);
+		System.out.println(rowCount+"<---rowCount");
+		System.out.println("------------ ItemService.rowCount() END ------------");
+		
+		return rowCount;
+	}
+	public ArrayList<Item> itemList(int currentPage, int rowsPerPage) {
 		System.out.println("ItemService.itemList()");
 		itemDao = new ItemDao();
 		SqlSession sqlSession = DBHelper.getSqlSession();
-		// ## ¾ÆÀÌÅÛ¸®½ºÆ® ÆäÀÌÂ¡
-		// ÀüÃ¼ µ¥ÀÌÅÍÀÇ ¼ö ±¸ÇÏ±â
-		int rowCount = itemDao.totalRowCount(sqlSession);
-		System.out.println(rowCount+"<---rowCount");
-		// ÇÑ ÆäÀÌÁö´ç ¸î °³ÀÇ µ¥ÀÌÅÍ¸¦ º¸¿©ÁÙ °ÍÀÎÁö, rowsPerPage Á¤ÇÏ±â
-		int rowsPerPage = 10;
-		// startRow ±¸ÇÏ±â
+		// í•œ í˜ì´ì§€ë‹¹ ëª‡ ê°œì˜ ë°ì´í„°ë¥¼ ë³´ì—¬ì¤„ ê²ƒì¸ì§€, rowsPerPage ì •í•˜ê¸°
+		
+		// startRow êµ¬í•˜ê¸°
 		int startRow = (currentPage-1)*rowsPerPage;
 		SqlSession sqlSessionForItemList = DBHelper.getSqlSession();
-		// currentPage, rowsPerPage¸¦ ÇØ½¬¸Ê¿¡ ´ã±â
+		// currentPage, rowsPerPageë¥¼ í•´ì‰¬ë§µì— ë‹´ê¸°
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("rowsPerPage", rowsPerPage);
